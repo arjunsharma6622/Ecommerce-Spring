@@ -55,7 +55,13 @@ public class FkStoreProductService implements ProductService{
     }
 
     @Override
-    public Product createProduct(String title, String description, String imageUrl, Double price, Category category) {
+    public Product createProduct(
+            String title,
+            String description,
+            String imageUrl,
+            Double price,
+            Category category
+    ) {
         FkStoreProductDTO fkStoreProduct = new FkStoreProductDTO();
         fkStoreProduct.setTitle(title);
         fkStoreProduct.setDescription(description);
