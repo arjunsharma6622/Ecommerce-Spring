@@ -36,21 +36,31 @@ class EcommerceApplicationTests {
 
     @Test
     void FetchTypeTest(){
-//        Category cat = categoryRepository.findById(5L).get();
-//        System.out.println(cat.getId());
-//        System.out.println("We are done here");
-//        List<Product> currentProds = cat.getProducts();
-//        System.out.println(currentProds.size());
+        Category cat = categoryRepository.findById(5L).get();
+        System.out.println(cat.getId());
+        System.out.println("We are done here");
+        List<Product> currentProds = cat.getProducts();
+        System.out.println(currentProds.size());
+    }
 
-
-        // H/W implement N+1 Problem case
+    // H/W implement N+1 Problem case
+    @Test
+    void NPlusOneProblemDemo(){
         List<Category> cat = categoryRepository.findAll();
 
-//        List<Product> products = new ArrayList<>();
-//        for(Category c : cat){
-//            List<Product> p = c.getProducts();
-//            products.add
-//        }
+        for(Category c : cat){
+            List<Product> prds = c.getProducts();
 
+            System.out.println("All Products of cat " + c.getTitle());
+
+            List<Product> products = new ArrayList<>();
+
+            for(Product p : prds){
+                products.add(p);
+                System.out.println(p.toString());
+            }
+
+            c.setProducts(products);
+        }
     }
 }
