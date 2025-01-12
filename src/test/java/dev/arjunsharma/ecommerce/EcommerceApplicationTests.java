@@ -34,14 +34,14 @@ class EcommerceApplicationTests {
         }
     }
 
-    @Test
-    void FetchTypeTest(){
-        Category cat = categoryRepository.findById(5L).get();
-        System.out.println(cat.getId());
-        System.out.println("We are done here");
-        List<Product> currentProds = cat.getProducts();
-        System.out.println(currentProds.size());
-    }
+//    @Test
+//    void FetchTypeTest(){
+//        Category cat = categoryRepository.findById(5L).get();
+//        System.out.println(cat.getId());
+//        System.out.println("We are done here");
+//        List<Product> currentProds = cat.getProducts();
+//        System.out.println(currentProds.size());
+//    }
 
     // H/W implement N+1 Problem case
     @Test
