@@ -3,6 +3,7 @@ package dev.arjunsharma.ecommerce.services;
 import dev.arjunsharma.ecommerce.exceptions.ProductNotFoundException;
 import dev.arjunsharma.ecommerce.models.Category;
 import dev.arjunsharma.ecommerce.models.Product;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ public interface ProductService {
     Product getSingleProduct(Long id) throws ProductNotFoundException;
 
     /* 2.Get All Products Service */
-    List<Product> getAllProducts();
+    Page<Product> getAllProducts(int pageNumber, int pageSize, String fieldName);
 
     /* 3.Create Product Service */
     Product createProduct(String title, String description, String imageUrl, Double price, Category category);

@@ -4,6 +4,7 @@ import dev.arjunsharma.ecommerce.dto.FkStoreProductDTO;
 import dev.arjunsharma.ecommerce.exceptions.ProductNotFoundException;
 import dev.arjunsharma.ecommerce.models.Category;
 import dev.arjunsharma.ecommerce.models.Product;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -38,21 +39,26 @@ public class FkStoreProductService implements ProductService{
     }
 
     @Override
-    public List<Product> getAllProducts() {
-        FkStoreProductDTO[] productsFromFkStore;
-        productsFromFkStore = restTemplate.getForObject(
-                "https://fakestoreapi.com/products",
-                FkStoreProductDTO[].class
-        );
-        List<Product> products = new ArrayList<>();
-
-        assert productsFromFkStore != null;
-        for(FkStoreProductDTO i : productsFromFkStore){
-            products.add(i.getProduct());
-        }
-
-        return products;
+    public Page<Product> getAllProducts(int pageNumber, int pageSize, String fieldName) {
+        return null;
     }
+
+//    @Override
+//    public List<Product> getAllProducts(int pageNumber, int pageSize, String fieldName) {
+//        FkStoreProductDTO[] productsFromFkStore;
+//        productsFromFkStore = restTemplate.getForObject(
+//                "https://fakestoreapi.com/products",
+//                FkStoreProductDTO[].class
+//        );
+//        List<Product> products = new ArrayList<>();
+//
+//        assert productsFromFkStore != null;
+//        for(FkStoreProductDTO i : productsFromFkStore){
+//            products.add(i.getProduct());
+//        }
+//
+//        return products;
+//    }
 
     @Override
     public Product createProduct(

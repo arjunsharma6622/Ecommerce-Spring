@@ -5,6 +5,9 @@ import dev.arjunsharma.ecommerce.models.Category;
 import dev.arjunsharma.ecommerce.models.Product;
 import dev.arjunsharma.ecommerce.repository.CategoryRepository;
 import dev.arjunsharma.ecommerce.repository.ProductRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,9 +36,15 @@ public class SelfProductService implements ProductService{
     }
 
     @Override
-    public List<Product> getAllProducts() {
-        List<Product> products;
-        products = productRepository.findAll();
+    public Page<Product> getAllProducts(int pageNumber, int pageSize, String fieldName) {
+        Page<Product> products;
+        products = productRepository.findAll(
+                PageRequest.of(
+                        pageNumber,
+                        pageSize,
+                        Sort.by(fieldName).ascending()
+                )
+        );
         return products;
     }
 

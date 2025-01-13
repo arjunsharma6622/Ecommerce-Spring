@@ -5,6 +5,7 @@ import dev.arjunsharma.ecommerce.exceptions.ProductNotFoundException;
 import dev.arjunsharma.ecommerce.models.Product;
 import dev.arjunsharma.ecommerce.services.ProductService;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,6 @@ public class ProductController {
         this.productService = productService;
     }
 
-    /* ✅ 1. GET Single Product */
     @GetMapping("/products/{id}")
     public Product GetSingleProduct(@PathVariable("id") Long id) throws ProductNotFoundException {
         Product p;
@@ -28,15 +28,15 @@ public class ProductController {
         return p;
     }
 
-    /* ✅ 2. GET All Products */
     @GetMapping("/products")
-    public List<Product> GetAllProducts(){
-        List<Product> products;
-        products = productService.getAllProducts();
-        return products;
+    public Page<Product> GetAllProducts(
+            @RequestParam("pageNumber") int pageNumber,
+            @RequestParam("pageSize") int pageSize,
+            @RequestParam("fieldName") String fieldName
+    ){
+        return productService.getAllProducts(pageNumber, pageSize, fieldName);
     }
 
-    /* ✅ 3. CREATE Product */
     @PostMapping("/products")
     public Product CreateProduct(@RequestBody Product product){
         Product createdProduct;
@@ -51,7 +51,6 @@ public class ProductController {
         return createdProduct;
     }
 
-    /* 4. UPDATE Product */
     @PutMapping("/products/{id}")
     public ResponseEntity<Product> UpdateProduct(@PathVariable("id") Long id, @RequestBody Product product) throws ProductNotFoundException {
         Product updatedProductFromDB = productService.updateProduct(
@@ -69,7 +68,6 @@ public class ProductController {
         return res;
     }
 
-    /* ✅ 5. DELETE Product */
     @DeleteMapping("/products/{id}")
     public ResponseEntity<Object> DeleteProduct(@PathVariable("id") Long id) throws ProductNotFoundException{
         productService.deleteProduct(id);

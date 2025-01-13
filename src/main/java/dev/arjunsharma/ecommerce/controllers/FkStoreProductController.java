@@ -32,15 +32,15 @@ public class FkStoreProductController {
     }
 
     /* ✅ 2. GET ALL Products */
-    @GetMapping("/fkstore/products")
-    public ResponseEntity<List<Product>> GetProducts(){
-        List<Product> products;
-        products = productService.getAllProducts();
-
-        ResponseEntity<List<Product>> res;
-        res = new ResponseEntity<>(products, HttpStatus.OK);
-        return res;
-    }
+//    @GetMapping("/fkstore/products")
+//    public ResponseEntity<List<Product>> GetProducts(){
+//        List<Product> products;
+//        products = productService.getAllProducts(1, 1, "fieldName");
+//
+//        ResponseEntity<List<Product>> res;
+//        res = new ResponseEntity<>(products, HttpStatus.OK);
+//        return res;
+//    }
 
     /* ✅ 3. CREATE Product */
     @PostMapping("/fkstore/products")
