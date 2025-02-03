@@ -1,7 +1,8 @@
 package dev.arjunsharma.ecommerce.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class Product extends BaseModel{
@@ -9,6 +10,7 @@ public class Product extends BaseModel{
     private String description;
     private String imageUrl;
     private Double price;
+
 
     @ManyToOne
     private Category category;

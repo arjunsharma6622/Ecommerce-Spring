@@ -8,7 +8,9 @@ import dev.arjunsharma.ecommerce.repository.ProductRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Optional;
@@ -72,6 +74,7 @@ public class SelfProductService implements ProductService{
         p.setDescription(description);
         p.setImageUrl(imageUrl);
         p.setPrice(price);
+        p.setCategory(category);
 
         Product savedProduct;
         savedProduct = productRepository.save(p);

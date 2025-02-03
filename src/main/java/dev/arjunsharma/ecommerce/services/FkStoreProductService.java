@@ -5,6 +5,7 @@ import dev.arjunsharma.ecommerce.exceptions.ProductNotFoundException;
 import dev.arjunsharma.ecommerce.models.Category;
 import dev.arjunsharma.ecommerce.models.Product;
 import org.springframework.data.domain.Page;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -18,13 +19,26 @@ import java.util.List;
 public class FkStoreProductService implements ProductService{
 
     final RestTemplate restTemplate;
+    private final RedisTemplate<String, Object> redisTemplate;
 
-    public FkStoreProductService(RestTemplate restTemplate) {
+    public FkStoreProductService(RestTemplate restTemplate, RedisTemplate<String, Object> redisTemplate) {
         this.restTemplate = restTemplate;
+        this.redisTemplate = redisTemplate;
     }
 
     @Override
     public Product getSingleProduct(Long id) throws ProductNotFoundException {
+
+        Product redisProduct = (Product) redisTemplate.opsForHash().get(
+                "PRODUCTS",
+                "PRODUCTS_"+id
+        );
+
+        if(redisProduct != null){
+            // means cache hit
+            return redisProduct;
+        }
+
         FkStoreProductDTO productFromFkStore;
         productFromFkStore = restTemplate.getForObject(
                 "https://fakestoreapi.com/products/"+id,
@@ -34,6 +48,14 @@ public class FkStoreProductService implements ProductService{
         if(productFromFkStore == null){
             throw new ProductNotFoundException("Product Not Found with ID " + id);
         }
+
+        System.out.println(productFromFkStore.getProduct().toString());
+        System.out.println(id);
+
+        redisTemplate.opsForHash().put("PRODUCTS", "PRODUCTS_"+id, productFromFkStore.getProduct());
+
+
+        System.out.println(id);
 
         return productFromFkStore.getProduct();
     }
